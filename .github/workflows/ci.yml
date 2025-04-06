@@ -20,10 +20,6 @@ jobs:
         with:
           terraform_version: 1.5.0
 
-      - name: Check if JSON was written properly
-        run: |
-          head -n 5 gcp-credentials.json
-
       - name: Set up GCP credentials
         run: |
           echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS
