@@ -38,6 +38,7 @@ jobs:
           directory: .
           skip_check: CKV_GCP_999
           output_format: sarif
+          output_file_path: results.sarif
 
       - name: Run OPA policy checks
         run: |
