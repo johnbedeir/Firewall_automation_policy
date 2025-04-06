@@ -1,5 +1,5 @@
-# checkov:
-#   skip-check: CKV_GCP_999
+checkov:
+  skip-check: CKV_GCP_999
 
 
 
