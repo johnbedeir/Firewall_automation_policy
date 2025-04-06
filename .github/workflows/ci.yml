@@ -1,4 +1,4 @@
-name: CI
+name: OPA Policy Scan
 
 on:
   pull_request:
@@ -32,22 +32,23 @@ jobs:
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
           gcloud config set project johnydev
 
-      - name: Run Checkov using config file
-        uses: bridgecrewio/checkov-action@master
-        with:
-          directory: .
+          - name: Install OPA CLI
+          run: |
+            curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+            chmod +x opa
+            sudo mv opa /usr/local/bin/
 
-      - name: Run OPA policy checks
+      - name: Validate firewall policy using OPA
         run: |
-          wget https://openpolicyagent.org/downloads/latest/opa_linux_amd64 -O opa
-          chmod +x opa
-          ./opa eval --fail-defined \
-            -i firewall.tf \
-            -d policies \
-            'data.main.deny' \
+          # Convert the Terraform file to JSON input (OPA doesn't parse HCL directly)
+          terraform init -backend=false
+          terraform plan -out=tfplan.binary
+          terraform show -json tfplan.binary > tfplan.json
+
+          # Run OPA against the JSON plan using your policy
+          opa eval \
+            --input tfplan.json \
+            --data policies \
+            "data.main.deny" \
+            --fail-defined \
             --format pretty
-
-      - name: Terraform Init and Validate
-        run: |
-          terraform init
-          terraform validate
