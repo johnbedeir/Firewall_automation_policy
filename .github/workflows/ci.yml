@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp-credentials.json
+      GOOGLE_APPLICATION_CREDENTIALS: gcp-credentials.json
 
     steps:
       - name: Check out repository
@@ -22,8 +22,8 @@ jobs:
 
       - name: Clean up credentials
         run: |
-          if [ -f "${{ github.workspace }}/gcp-credentials.json" ]; then
-            rm "${{ github.workspace }}/gcp-credentials.json"
+          if [ -f "gcp-credentials.json" ]; then
+            rm "gcp-credentials.json"
           fi
 
       - name: Set up GCP credentials
