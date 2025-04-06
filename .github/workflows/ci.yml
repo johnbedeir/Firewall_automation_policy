@@ -20,6 +20,9 @@ jobs:
         with:
           terraform_version: 1.5.0
 
+      - name: Clean up credentials
+        run: rm ${{ github.workspace }}/gcp-credentials.json
+
       - name: Set up GCP credentials
         run: |
           echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS
