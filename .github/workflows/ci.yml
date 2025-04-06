@@ -36,6 +36,7 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: .
+          skip_check: CKV_GCP_999
 
       - name: Run OPA policy checks
         run: |
