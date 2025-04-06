@@ -41,7 +41,7 @@ jobs:
       - name: Validate firewall policy using OPA
         run: |
           # Convert the Terraform file to JSON input (OPA doesn't parse HCL directly)
-          terraform init -backend=false
+          terraform init -reconfigure
           terraform plan -out=tfplan.binary
           terraform show -json tfplan.binary > tfplan.json
 
