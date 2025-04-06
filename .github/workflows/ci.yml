@@ -33,7 +33,11 @@ jobs:
           gcloud config set project johnydev
 
       - name: Run Checkov scan
-        run: checkov -d . --skip-check CKV_GCP_999 --output sarif
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          skip_check: CKV_GCP_999
+          output_format: sarif
 
       - name: Run OPA policy checks
         run: |
