@@ -21,7 +21,10 @@ jobs:
           terraform_version: 1.5.0
 
       - name: Clean up credentials
-        run: rm ${{ github.workspace }}/gcp-credentials.json
+        run: |
+          if [ -f "${{ github.workspace }}/gcp-credentials.json" ]; then
+            rm "${{ github.workspace }}/gcp-credentials.json"
+          fi
 
       - name: Set up GCP credentials
         run: |
