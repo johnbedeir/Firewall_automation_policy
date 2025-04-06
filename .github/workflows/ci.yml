@@ -19,6 +19,10 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.0
+          
+      - name: Debug: Check if JSON was written properly
+        run: |
+          head -n 5 gcp-credentials.json 
 
       - name: Set up GCP credentials
         run: |
