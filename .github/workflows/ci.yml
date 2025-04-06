@@ -32,12 +32,11 @@ jobs:
           gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
           gcloud config set project johnydev
 
-      - name: Run Checkov (manual CLI)
-        run: |
-          checkov -d . \
-            --skip-check CKV_GCP_999 \
-            --output sarif \
-            --output-file-path results.sarif
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          extra_args: "--skip-check CKV_GCP_999 --output sarif --output-file-path results.sarif"
 
       - name: Run OPA policy checks
         run: |
