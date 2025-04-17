@@ -53,5 +53,5 @@ jobs:
             --input tfplan.json \
             --data policies \
             "data.main.deny" \
-            --fail-defined \
+            --fail \
             --format pretty
