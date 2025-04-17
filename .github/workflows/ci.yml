@@ -42,8 +42,8 @@ jobs:
         run: |
           # Convert the Terraform file to JSON input (OPA doesn't parse HCL directly)
           terraform init -migrate-state
-          terraform init
-          terraform plan -out=tfplan.binary
+          terraform init 
+          terraform plan -out=tfplan.binary -lock=false
           terraform show -json tfplan.binary > tfplan.json
 
           # Run OPA against the JSON plan using your policy
