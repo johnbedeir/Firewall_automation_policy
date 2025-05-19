@@ -55,8 +55,8 @@ jobs:
             "data.main.deny" \
             --format json)
 
-          # Check if OPA found any violations
-          if [ "$(echo $OPA_RESULT | jq -r '.result[0]')" != "[]" ]; then
+          # Check if OPA found any violations (the result should be empty if no violations)
+          if [ "$(echo $OPA_RESULT | jq -r '.result[0].expressions[0].value')" != "{}" ]; then
             echo "OPA policy violations found:"
             echo $OPA_RESULT
             exit 1
