@@ -49,7 +49,7 @@ You must define the following secrets in your repository:
 ## 🛠️ How to Generate `GCP_SERVICE_ACCOUNT_KEY_B64`
 
 ```bash
-base64 -i gcp-credentials.json | tr -d '\n' > gcp-key.b64
+base64 -i gcp-credentials.json | tr -d '\n' > key.b64
 ```
 
 Then copy the content of `key.b64` and add it as the secret `GCP_SERVICE_ACCOUNT_KEY_B64`.
