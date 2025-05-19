@@ -10,7 +10,7 @@ resource "google_compute_firewall" "allow_http" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-resource "google_compute_firewall" "allow_http" {
+resource "google_compute_firewall" "allow_port" {
   name    = "allow-port"
   network = "default"
 
@@ -22,7 +22,7 @@ resource "google_compute_firewall" "allow_http" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-resource "google_compute_firewall" "allow_http" {
+resource "google_compute_firewall" "allow_ssh" {
   name    = "allow-ssh"
   network = "default"
 
