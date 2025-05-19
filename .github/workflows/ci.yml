@@ -57,3 +57,7 @@ jobs:
             "data.main.deny" \
             --fail \
             --format pretty
+
+      - name: Terraform Apply
+        if: ${{ success() }}
+        run: terraform apply -auto-approve tfplan.binary
