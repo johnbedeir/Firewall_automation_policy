@@ -41,19 +41,27 @@ jobs:
           sudo mv opa /usr/local/bin/
 
       - name: Validate firewall policy using OPA
+        id: opa-check
         run: |
-          # Convert the Terraform file to JSON input (OPA doesn't parse HCL directly)
           terraform init -migrate-state
           terraform init 
           terraform plan -out=tfplan.binary -lock=false
           terraform show -json tfplan.binary > tfplan.json
-          # terraform apply -auto-approve -lock=false "tfplan.binary"
-          terraform destroy -auto-approve -lock=false "tfplan.binary"
 
           # Run OPA against the JSON plan using your policy
-          opa eval \
+          OPA_RESULT=$(opa eval \
             --input tfplan.json \
             --data policies \
             "data.main.deny" \
-            --fail \
-            --format pretty
+            --format json)
+
+          # Check if OPA found any violations (the result should be empty if no violations)
+          if [ "$(echo $OPA_RESULT | jq -r '.result[0].expressions[0].value')" != "{}" ]; then
+            echo "OPA policy violations found:"
+            echo $OPA_RESULT
+            exit 1
+          fi
+
+      - name: Terraform Apply
+        if: steps.opa-check.outcome == 'success'
+        run: terraform apply -auto-approve tfplan.binary
