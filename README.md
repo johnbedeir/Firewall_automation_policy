@@ -15,6 +15,7 @@ This project automates the deployment of GCP firewall rules using Terraform, int
 - The OPA policy ensures insecure firewall rules (e.g., allowing port 22 to 0.0.0.0/0) are blocked.
 
 ---
+
 ## 📂 Project Structure
 
 ```
@@ -32,6 +33,7 @@ This project automates the deployment of GCP firewall rules using Terraform, int
 ```
 
 ---
+
 ## 🔐 Required GitHub Secrets
 
 You must define the following secrets in your repository:
@@ -43,18 +45,18 @@ You must define the following secrets in your repository:
 | `GCP_REGION`                  | GCP region (e.g., `us-central1`)             |
 
 ---
+
 ## 🛠️ How to Generate `GCP_SERVICE_ACCOUNT_KEY_B64`
 
-
 ```bash
-base64 -i terraform-sa-key.json | tr -d '\n' > key.b64
+base64 -i gcp-credentials.json | tr -d '\n' > gcp-key.b64
 ```
 
 Then copy the content of `key.b64` and add it as the secret `GCP_SERVICE_ACCOUNT_KEY_B64`.
 
 ---
-## ✅ Security Policy (OPA)
 
+## ✅ Security Policy (OPA)
 
 The `firewall.rego` policy blocks any firewall rule that:
 
@@ -64,6 +66,7 @@ The `firewall.rego` policy blocks any firewall rule that:
 You can customize it to enforce your own network security rules.
 
 ---
+
 ## 📌 Notes
 
 - The CI pipeline applies changes **only if the policy passes**.
@@ -81,6 +84,7 @@ Terraform Apply Successful ✅
 ```
 
 ---
+
 ## 💬 Want to extend it?
 
 - Add multiple firewall rules
