@@ -11,7 +11,7 @@ resource "google_compute_firewall" "allow_http" {
 }
 
 resource "google_compute_firewall" "allow_http" {
-  name    = "allow-http-2"
+  name    = "allow-port"
   network = "default"
 
   allow {
@@ -23,7 +23,7 @@ resource "google_compute_firewall" "allow_http" {
 }
 
 resource "google_compute_firewall" "allow_http" {
-  name    = "allow-http-ip"
+  name    = "allow-ssh"
   network = "default"
 
   allow {
